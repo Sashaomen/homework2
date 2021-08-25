@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 /// <summary>
 /// 2.7 Домашняя работа 
@@ -18,140 +19,202 @@ namespace Homework_Theme_01
         public static void Main(string[] args)
         {
             Console.WriteLine("Записная книжка"); //название программы
-                     
+
             #region user1
-                Console.WriteLine("Пользователь 1");
-                Console.WriteLine("\nВведите имя:");//ввод имени первого пользователя
-                string name = Convert.ToString(Console.ReadLine());
-                byte height,age,his, rus, mat; ; //определение типа переменных              
-                while (true) //цикл, после выполнения которого получим корректные данные
+            //string name;//определение типа переменных
+            byte his1, rus1, mat1, height1, age1;
+            string name,name2,name3;
+            //int name1;
+            Console.WriteLine("Пользователь 1");
+          
+            while (true)
+            {
+                Console.WriteLine("\nВведите имя:");
+                name = Console.ReadLine();
+                string name_= @"^[a-zA-Zа-яА-Я]"; //[a-zA-Zа-яА-Я] шаблон регулярное выражение, сотоящее только из латинских и кириллических символов
+                Match m = Regex.Match(name, name_);// Метод возвращает первую подстроку, которая соответствует шаблону регулярного выражения во входной строке
+                if (!m.Success) //цикл, который при введении иных символов кроме букв возвращает к вводу имени
                 {
-                    Console.WriteLine("Введите возраст");
-                    age = byte.Parse(Console.ReadLine());   /*преобразование типа 
-                                                            статическим методом Parse*/
-                    if (age > 100 | age < 18) //условие вводимых данных, при которых цикл выполнится
+                    Console.WriteLine("Имя должно содержать только буквы ", m.Value, m.Index);
+                    m = m.NextMatch();
+                }
+                else { break; } //при успешном вводе выходит из цикла с введенным именем
+                
+            }
+            
+            while (true)
+            {
+                Console.WriteLine("Введите возраст");
+                //age = Console.ReadLine();
+                if (byte.TryParse(Console.ReadLine(), out age1)) /*преобразование типа 
+                                                            статическим методом TryParse*/
+                   
+                    if (age1 > 100 | age1 < 18)  //условие вводимых данных, при которых цикл выполнится
                     {
                         Console.WriteLine("Ошибка! ВВедите достоверные данные");
                     }
-                    else {break;}//завершение выполнения тела цикла 
-                }
-
+                    else { break; }//завершение выполнения тела цикла 
+                Console.WriteLine("Ошибка! ВВедите достоверные");
+            }
+            
+            while (true)
+            {
                 Console.WriteLine("Введите рост");
-                height = byte.Parse(Console.ReadLine());
-                            
-                while (true) //цикл после выполнения которого получим корректные данные
-            {
-                    Console.WriteLine("Балл по истории");
-                    his = byte.Parse(Console.ReadLine());
-                    if (his > 100)
+                //height = Console.ReadLine();
+                
+                if (byte.TryParse(Console.ReadLine(), out height1))
+                    if (height1 > 250)
                     {
-                        Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
+                        Console.WriteLine("Ошибка! Рост не может быть выше 250 см");
                     }
-                    else 
+                    else
                     { break; }
-                }
+                Console.WriteLine("Ошибка! Введите правильные данные");
+            }
 
-                while (true) //цикл, после выполнения которого получим корректные данные
+            while (true) //цикл после выполнения которого получим корректные данные
             {
-                    Console.WriteLine("Балл по математике");
-                    mat = byte.Parse(Console.ReadLine());
-                    if (mat > 100)
+                Console.WriteLine("Балл по истории");
+                //his = Console.ReadLine();
+                if (byte.TryParse(Console.ReadLine(), out his1))
+
+                    if (his1 > 100)
+                    {
+                        Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
+                    }
+                    else
+                    { break; }
+            }
+
+            while (true) //цикл, после выполнения которого получим корректные данные
+            {
+                Console.WriteLine("Балл по математике");
+                //mat = Console.ReadLine();
+                if (byte.TryParse(Console.ReadLine(), out mat1))
+                    if (mat1 > 100)
                     {
                         Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
                     }
                     else { break; }
 
-                }
+            }
 
-                while(true)//цикл после выполнения которого получим корректные данные
+            while (true)//цикл после выполнения которого получим корректные данные
             {
-                    Console.WriteLine("Балл по русскому");
-                    rus = byte.Parse(Console.ReadLine());
-                    if (rus > 100)
+                Console.WriteLine("Балл по русскому");
+                //rus = Console.ReadLine();
+                if (byte.TryParse(Console.ReadLine(), out rus1))
+                    if (rus1 > 100)
                     {
                         Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
                     }
                     else { break; }
-                }
-                Console.WindowWidth = 200;//ширина окна консоли
-                double average = Convert.ToDouble(mat + rus + his) / 3;//подсчет среднего балла
-                double averageRound = Math.Round(average, 2);//округление до сотых
-                string newPattern = "Имя: "+ name + ". " + "Возраст: " + age + " года(лет). "+ "Рост: " + height +" см. " + //обычный
-                                    "Балл по русскому: " + rus + " . "+ "Балл по Истории: " + his +" . "+                   //вывод
-                                    "Балл по Математике: " + mat + " . "+ "Средний балл: " + averageRound;                  //данных
-               
+            }
+            Console.WindowWidth = 200;//ширина окна консоли
+            double average = Convert.ToDouble(mat1 + rus1 + his1) / 3;//подсчет среднего балла
+            double averageRound = Math.Round(average, 2);//округление до сотых
+            string newPattern = "Имя: " + name + ". " + "Возраст: " + age1 + " года(лет). " + "Рост: " + height1 + " см. " + //обычный
+                                "Балл по русскому: " + rus1 + " . " + "Балл по Истории: " + his1 + " . " +                   //вывод
+                                "Балл по Математике: " + mat1 + " . " + "Средний балл: " + averageRound;                  //данных
+
             //определения полождения выводимого текста по центру консоли
-                int centerX = (Console.WindowWidth / 2) - (newPattern.Length / 2); //(ширина окна консоли поделенная на два)-(длина выводимой строки / 2)
-                int centerY = (Console.WindowHeight / 2) - 1; //(высота окна консоли / 2) - 1
-                Console.SetCursorPosition(centerX, centerY); //координата вывода 
-                Console.WriteLine(newPattern);//вывод вводимых данных
-                Console.ReadKey();// переход к следующей части программы нажатием клавиши
-                Console.Clear();//очистка консоли
+            int centerX = (Console.WindowWidth / 2) - (newPattern.Length / 2); //(ширина окна консоли поделенная на два)-(длина выводимой строки / 2)
+            int centerY = (Console.WindowHeight / 2) - 1; //(высота окна консоли / 2) - 1
+            Console.SetCursorPosition(centerX, centerY); //координата вывода 
+            Console.WriteLine(newPattern);//вывод вводимых данных
+            Console.ReadKey();// переход к следующей части программы нажатием клавиши
+            Console.Clear();//очистка консоли
             #endregion
 
             //данные для второго пользователя
             #region user2
             Console.WriteLine("Пользователь 2");
-            Console.WriteLine("\nВведите имя:");
-            string name2 = Convert.ToString(Console.ReadLine());
+            while (true)
+            {
+                Console.WriteLine("\nВведите имя:");
+                name2 = Console.ReadLine();
+                string name_ = @"^[a-zA-Zа-яА-Я]"; //[a-zA-Zа-яА-Я] шаблон регулярное выражение, сотоящее только из латинских и кириллических символов
+                Match m = Regex.Match(name2, name_);// Метод возвращает первую подстроку, которая соответствует шаблону регулярного выражения во входной строке
+                if (!m.Success) //цикл, который при введении иных символов кроме букв возвращает к вводу имени
+                {
+                    Console.WriteLine("Имя должно содержать только буквы ", m.Value, m.Index);
+                    m = m.NextMatch();
+                }
+                else { break; } //при успешном вводе выходит из цикла с введенным именем
+
+            }
             while (true)
             {
                 Console.WriteLine("Введите возраст");
-                age = byte.Parse(Console.ReadLine());
-
-                if (age > 100 | age < 18)
-                {
-                    Console.WriteLine("Ошибка! ВВедите достоверные данные");
-                }
-                else { break; }
+                if (byte.TryParse(Console.ReadLine(), out age1)) /*преобразование типа 
+                                                            статическим методом TryParse*/
+                    //else if (age1 > 100 | age1 < 18)
+                    //{ Console.WriteLine("Введите правильный возраст"); }
+                    if (age1 > 100 | age1 < 18)  //условие вводимых данных, при которых цикл выполнится
+                    {
+                        Console.WriteLine("Ошибка! ВВедите достоверные данные");
+                    }
+                    else { break; }//завершение выполнения тела цикла 
+                Console.WriteLine("Ошибка! ВВедите достоверные");
             }
-          
-            Console.WriteLine("Введите рост");
-            height = byte.Parse(Console.ReadLine());
-            
+
             while (true)
+            {
+                Console.WriteLine("Введите рост");
+                if (byte.TryParse(Console.ReadLine(), out height1))
+                    if (height1 > 250)
+                    {
+                        Console.WriteLine("Ошибка! Рост не может быть выше 250 см");
+                    }
+                    else
+                    { break; }
+                Console.WriteLine("Ошибка! Введите правильные данные");
+            }
+
+            while (true) //цикл после выполнения которого получим корректные данные
             {
                 Console.WriteLine("Балл по истории");
-                his = byte.Parse(Console.ReadLine());
-                if (his > 100)
-                {
-                    Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
-                }
-                else
-                { break; }
+                if (byte.TryParse(Console.ReadLine(), out his1))
+
+                    if (his1 > 100)
+                    {
+                        Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
+                    }
+                    else
+                    { break; }
             }
 
-            while (true)
+            while (true) //цикл, после выполнения которого получим корректные данные
             {
                 Console.WriteLine("Балл по математике");
-                mat = byte.Parse(Console.ReadLine());
-                if (mat > 100)
-                {
-                    Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
-                }
-                else { break; }
+                if (byte.TryParse(Console.ReadLine(), out mat1))
+                    if (mat1 > 100)
+                    {
+                        Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
+                    }
+                    else { break; }
 
             }
 
-            while (true)
+            while (true)//цикл после выполнения которого получим корректные данные
             {
                 Console.WriteLine("Балл по русскому");
-                rus = byte.Parse(Console.ReadLine());
-                if (rus > 100)
-                {
-                    Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
-                }
-                else { break; }
+                if (byte.TryParse(Console.ReadLine(), out rus1))
+                    if (rus1 > 100)
+                    {
+                        Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
+                    }
+                    else { break; }
             }
             //вывод данных осуществляется форматированным выводом
-            
+
             string newPattern2 = "Имя: {0} Возраст: {1}лет. Рост: {2}см. Балл по русскому: {3}. " +
                                  "Балл по Истории: {4}. Балл по Математике: {5}. Средний балл: {6}.";
             
             int centerX2 = (Console.WindowWidth / 2) - (newPattern2.Length / 2);
             int centerY2 = (Console.WindowHeight / 2) - 1;
             Console.SetCursorPosition(centerX2, centerY2);
-            Console.Write(newPattern2, name2, age, height, rus, his, mat,averageRound);
+            Console.Write(newPattern2, name2, age1, height1, rus1, his1, mat1,averageRound);
             Console.ReadKey();
             Console.Clear();
             #endregion
@@ -159,61 +222,86 @@ namespace Homework_Theme_01
             #region user3
             //данные для третьего пользователя
             Console.WriteLine("Пользователь 3");
-            Console.WriteLine("\nВведите имя:");
-            string name3 = Convert.ToString(Console.ReadLine());
+            while (true)
+            {
+                Console.WriteLine("\nВведите имя:");
+                name3 = Console.ReadLine();
+                string name_ = @"^[a-zA-Zа-яА-Я]"; //[a-zA-Zа-яА-Я] шаблон регулярное выражение, сотоящее только из латинских и кириллических символов
+                Match m = Regex.Match(name3, name_);// Метод возвращает первую подстроку, которая соответствует шаблону регулярного выражения во входной строке
+                if (!m.Success) //цикл, который при введении иных символов кроме букв возвращает к вводу имени
+                {
+                    Console.WriteLine("Имя должно содержать только буквы ", m.Value, m.Index);
+                    m = m.NextMatch();
+                }
+                else { break; } //при успешном вводе выходит из цикла с введенным именем
+
+            }
             while (true)
             {
                 Console.WriteLine("Введите возраст");
-                age = byte.Parse(Console.ReadLine());
-
-                if (age > 100 | age < 18)
-                {
-                    Console.WriteLine("Ошибка! ВВедите достоверные данные");
-                }
-                else { break; }
+                if (byte.TryParse(Console.ReadLine(), out age1)) /*преобразование типа 
+                                                            статическим методом TryParse*/
+                    //else if (age1 > 100 | age1 < 18)
+                    //{ Console.WriteLine("Введите правильный возраст"); }
+                    if (age1 > 100 | age1 < 18)  //условие вводимых данных, при которых цикл выполнится
+                    {
+                        Console.WriteLine("Ошибка! ВВедите достоверные данные");
+                    }
+                    else { break; }//завершение выполнения тела цикла 
+                Console.WriteLine("Ошибка! ВВедите достоверные");
             }
 
-            Console.WriteLine("Введите рост");
-            height = byte.Parse(Console.ReadLine());
-
             while (true)
+            {
+                Console.WriteLine("Введите рост");
+                if (byte.TryParse(Console.ReadLine(), out height1))
+                    if (height1 > 250)
+                    {
+                        Console.WriteLine("Ошибка! Рост не может быть выше 250 см");
+                    }
+                    else
+                    { break; }
+                Console.WriteLine("Ошибка! Введите правильные данные");
+            }
+
+            while (true) //цикл после выполнения которого получим корректные данные
             {
                 Console.WriteLine("Балл по истории");
-                his = byte.Parse(Console.ReadLine());
-                if (his > 100)
-                {
-                    Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
-                }
-                else
-                { break; }
+                if (byte.TryParse(Console.ReadLine(), out his1))
+
+                    if (his1 > 100)
+                    {
+                        Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
+                    }
+                    else
+                    { break; }
             }
 
-            while (true)
+            while (true) //цикл, после выполнения которого получим корректные данные
             {
                 Console.WriteLine("Балл по математике");
-                mat = byte.Parse(Console.ReadLine());
-                if (mat > 100)
-                {
-                    Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
-                }
-                else { break; }
-
+                if (byte.TryParse(Console.ReadLine(), out mat1))
+                    if (mat1 > 100)
+                    {
+                        Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
+                    }
+                    else { break; }
             }
 
-            while (true)
+            while (true)//цикл после выполнения которого получим корректные данные
             {
                 Console.WriteLine("Балл по русскому");
-                rus = byte.Parse(Console.ReadLine());
-                if (rus > 100)
-                {
-                    Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
-                }
-                else { break; }
+                if (byte.TryParse(Console.ReadLine(), out rus1))
+                    if (rus1 > 100)
+                    {
+                        Console.WriteLine("\nБольше 100 баллов быть не может! Проверьте данные!");
+                    }
+                    else { break; }
             }
-           
+
             //вывод текста с применением интерполяции
-            string user3 = $"Имя: {name}. Возраст: {age} лет. Рост: {height} см. Балл по истории: {his}." +
-                             $"Балл по математике: {mat}. Балл по русскому: {rus}.  Средний балл: {averageRound} ";
+            string user3 = $"Имя: {name3}. Возраст: {age1} лет. Рост: {height1} см. Балл по истории: {his1}." +
+                             $"Балл по математике: {mat1}. Балл по русскому: {rus1}.  Средний балл: {averageRound} ";
             
             int centerX3 = (Console.WindowWidth / 2) - (user3.Length / 2);
             int centerY3 = (Console.WindowHeight / 2) - 1;
@@ -221,6 +309,8 @@ namespace Homework_Theme_01
             Console.WriteLine(user3);
             Console.ReadKey();
             #endregion
+            
+
 
         }
     }
